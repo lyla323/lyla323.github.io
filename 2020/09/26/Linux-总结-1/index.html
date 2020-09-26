@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>Linux 总结(1) | 哪吒的莲花宝座</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.2.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Linux 总结(1)</h1><a id="logo" href="/.">哪吒的莲花宝座</a><p class="description"></p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Linux 总结(1)</h1><div class="post-meta">2020-09-26</div><div class="post-content"><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><h5 id="ect"><a href="#ect" class="headerlink" title="/ect"></a>/ect</h5><p>系统层面的配置文件，shell脚本，都是可读的文本文件</p>
+<ul>
+<li><code>/etc/crontab</code>, 定义自动运行的任务</li>
+<li><code>/etc/fstab</code>, 存储设备的列表以及与他们相关的挂载点</li>
+<li><code>/etc/passwd</code>, 包含用户账号列表<a id="more"></a>
+<h5 id="bin"><a href="#bin" class="headerlink" title="/bin"></a>/bin</h5>系统启动和运行所必须的二进制程序<h5 id="media"><a href="#media" class="headerlink" title="/media"></a>/media</h5>包含可移除项目挂载点<h5 id="tmp"><a href="#tmp" class="headerlink" title="/tmp"></a>/tmp</h5>存储临时文件，系统重启时会清空此目录<h5 id="usr"><a href="#usr" class="headerlink" title="/usr"></a>/usr</h5>包含普通用户所需要的所有程序和文件<h5 id="usr-bin"><a href="#usr-bin" class="headerlink" title="/usr/bin"></a>/usr/bin</h5>系统安装的可执行程序<h5 id="var-log"><a href="#var-log" class="headerlink" title="/var/log"></a>/var/log</h5>包含日志文件</li>
+</ul>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><ul>
+<li><code>cp</code> 复制文件和目录，可同时复制多个文件到一个目录</li>
+<li><code>mv</code> 移动/重命名文件和目录，移动到的文件或目录名不存在时相当于重命名</li>
+<li><code>mkdir</code> 创建目录</li>
+<li><code>rm</code> 删除文件和目录（删除目录时需要加<code>-r</code>）</li>
+<li><code>ln</code> 创建硬链接和符号链接<ul>
+<li>硬链接：<ul>
+<li><code>ln fun.txt funny</code>, 把本目录中的fun的硬链接funny创建在本目录中</li>
+<li><code>ln fun.txt dir1/funny</code>, 创建硬链接在dir1中</li>
+</ul>
+</li>
+<li>符号链接：<ul>
+<li><code>ln -s fun.txt funny</code>, 创建软链接</li>
+<li>在其他目录中创建软链接的方法也是硬链接加<code>-s</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>alias</code> 创建一系列命令的别名：<br><code>alias name=&#39;cd /usr; ls; cd -&#39;</code>   name为创建的别名，之后使用name就能直接一次性执行这些操作，原本单次执行的命令用；隔开</li>
+</ul>
+<h2 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h2><ul>
+<li><code>ls -l /usr/bin &gt; output.txt</code> 把操作<code>ls -l /usr/bin</code>的原本会在屏幕上显示的结果重定向输出到txt文件中（不会重定向错误信息）</li>
+<li><code>ls -l /usr/bin &gt;&gt; output.txt</code> 把操作结果追加到原文件后面而不是重写</li>
+<li><code>ls -l /usr/bin 2&gt; output.txt</code> 在&gt;前加个2就重定向了标准错误（若输出的只有标准输出，即前面没有出现标准错误的话，就不会有内容被导入output.txt，而是直接在屏幕上现实，因为标准输出没有被重定向，其仍在屏幕上输出<ul>
+<li>0 标准输入</li>
+<li>1 标准输出</li>
+<li>2 错误</li>
+</ul>
+</li>
+<li><code>ls -l /usr/bin &gt; output.txt 2&gt;&amp;1</code> 标准输出和标准错误都输出到txt文件中</li>
+<li><code>ls -l /bin/usr 2&gt; /dev/null</code> 不显示错误信息，把重定向结果导入系统设备位存储桶，若结果没有错误，则正确结果直接在屏幕上显示</li>
+<li><code>cat [filename]</code> 直接显示内容简短的文本内容，file是被重定向的输入，即把标准输入从键盘改为文件</li>
+<li><code>cat movie.mpeg.0* &gt; movie.mpeg</code> 用来把被分离成很多块并且命名连续的大型文件连接起来，即由<code>movie.mpeg.0*</code>输入再输出到<code>movie.mpeg</code></li>
+<li><code>cat</code> 从标准输入（键盘）输入内容并在屏幕输出，输入完要用Ctrl-d结束</li>
+<li><code>command1 | command2</code>把命令1的标准输出作为命令2的标准输入</li>
+<li><code>wc</code> 打印文件包含的行，字和字节数</li>
+<li><code>grep zip</code> 打印包含zip的部分 <code>ls /bin /usr/bin | sort | uniq | grep zip</code>就是把bin文件夹和usr文件夹的bin文件夹合并后排序，同时删除重复行，查找里面包含zip的文件名</li>
+<li><code>head 文件名</code>, <code>tail 文件名</code> 打印默认的文件前10行或后10行</li>
+<li><code>head -n 5 文件名</code>, <code>tail -n 5 文件名</code> 打印文件前5行或后5行</li>
+<li><code>ls /usr/bin | tail -n 5</code> 打印输出内容的后5行</li>
+<li><code>tail -f /var/log/messages</code> 实时监控日志文件直到输入Ctrl-c</li>
+<li><code>tee</code>放在想要捕捉内容的管道的前面捕捉内容<code>ls /usr/bin | tee ls.txt | grep zip</code>捕捉grep前的内容</li>
+</ul>
+<h2 id="展开和引用"><a href="#展开和引用" class="headerlink" title="展开和引用"></a>展开和引用</h2><p><code>echo</code> 展开显示一行文本，如果文本中有特殊字符，会根据字符的功能展开，除非使用引号禁用</p>
+<h4 id="字符展开"><a href="#字符展开" class="headerlink" title="字符展开"></a>字符展开</h4><ul>
+<li><code>echo 不包含特殊字符的普通文本</code> 在标准输出中直接打印<h4 id="路径名展开"><a href="#路径名展开" class="headerlink" title="路径名展开"></a>路径名展开</h4></li>
+<li><code>echo *</code> or <code>echo D*</code> or <code>echo [[:upper:]]*</code> or <code>echo /usr/*/share</code> 通过通配符使echo展开显示有相关限制的文件名</li>
+<li><code>echo .*</code>可以列出很多隐藏文件，不过会导致出现当前工作目录的父目录<code>..</code>，若要使它不会出现，用<code>echo .[!.]?*</code>,文件名只能以一个圆点开头并且后面至少会跟一个字符。使用<code>ls -A</code>能更精确地列出隐藏文件</li>
+<li><code>echo ~</code> or <code>echo ~foo</code> 展开本账号的家用户名或账号foo的家用户名<h4 id="算术表达式展开"><a href="#算术表达式展开" class="headerlink" title="算术表达式展开"></a>算术表达式展开</h4></li>
+<li><code>echo $((expression))</code>双层括号</li>
+<li><code>echo $(($((5**2)) * 3))</code> 表达式可以嵌套，但是每一次运算都要使用一次<code>echo $((expression))</code>并注意双层括号，<code>**</code>是取幂运算</li>
+<li><code>echo with $((5%2)) left over.</code>算术表达式也可直接放在普通文本中，由于<code>echo</code>的存在输出结果会被自动计算<h4 id="花括号展开"><a href="#花括号展开" class="headerlink" title="花括号展开"></a>花括号展开</h4></li>
+<li><code>ehco Front-&#123;A,B,C&#125;-Back</code> 花括号内是可选择的内容，括号外内容固定不变，输出结果数量看花括号内内容数量：<code>Front-A-Back Front-B-Back Front-C-Back</code></li>
+<li><code>echo Number_&#123;1..5&#125;</code> or <code>echo &#123;a..z&#125;</code> or <code>echo &#123;Z..A&#125;</code> 花括号内内容为一系列有序整数或字母时可用<code>..</code>省略输出</li>
+<li><code>echo a&#123;A&#123;1,2&#125;,B&#123;3,4&#125;&#125;b</code> 当花括号内有多组花括号时按花括号内的内容排列组合输出<h4 id="参数展开"><a href="#参数展开" class="headerlink" title="参数展开"></a>参数展开</h4></li>
+<li><code>echo $USER</code> 输出正在使用的用户名<h4 id="命令替换"><a href="#命令替换" class="headerlink" title="命令替换"></a>命令替换</h4></li>
+<li><code>ls -l $(which cp)</code> 把<code>which cp</code> 的执行结果传递给ls命令，在不知道cp完整路径名的情况下输出列表<h4 id="控制展开"><a href="#控制展开" class="headerlink" title="控制展开"></a>控制展开</h4>当用<code>echo</code>展开字符串时，它会自动删除字符串句子中的多余空格并展开特殊符号，此时需要其他方法来阻止展开；而文件名中的空格会导致文件名被自动切割识别为两个文件名，故要禁止文件名被展开</li>
+<li>双引号<ul>
+<li>禁止单词分割（删除句子中多余空格），阻止文件名带空格时名字被空格分割</li>
+<li>不禁止参数展开（<code>echo $USER</code>）算术表达式展开（<code>echo $((expression))</code>）和命令行替换（<code>ls -l $(which cp)</code>）</li>
+</ul>
+</li>
+<li>单引号<ul>
+<li>禁止所有展开</li>
+</ul>
+</li>
+<li>转义字符<br>用<code>\</code>放在原本会被展开的特殊字符之前使他变为普通字符直接输出<ul>
+<li><code>echo &quot;The balance for user $USER is: \$5.00</code></li>
+<li><code>mv bad\&amp;filename good_filename</code>  修复有特殊字符&amp;的坏文件名</li>
+</ul>
+</li>
+</ul>
+<h2 id="权限"><a href="#权限" class="headerlink" title="权限"></a>权限</h2><ul>
+<li><code>id</code> 显示用户身份号</li>
+<li><code>chmod</code> 更改文件模式 (changemode)</li>
+<li><code>umask</code> 设置默认的文件权限</li>
+<li><code>su</code> 以另一个用户的身份来运行shell，使用后直接切换用户home并可执行一系列操作，要返回原来用户时输入<code>exit</code></li>
+<li><code>sudo</code> 以另一个用户的身份来执行命令，后面直接跟一条命令，值用另一个用户的身份来执行这一条命令</li>
+<li><code>chown</code> 更改<strong>文件</strong>所有权(changeowner)</li>
+<li><code>chgrp</code> 更改<strong>文件组</strong>所有权</li>
+<li><code>passwd</code> 更改用户密码<h4 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h4></li>
+<li><code>-</code> 一个普通文件</li>
+<li><code>d</code> 一个目录</li>
+<li><code>l</code> 一个符号链接<h4 id="更改文件类型"><a href="#更改文件类型" class="headerlink" title="更改文件类型"></a>更改文件类型</h4></li>
+<li><code>chmod 700 foo.txt</code> 设置权限为-rw——-,所有者有读写权限，用户组和其他人没有权限</li>
+<li><code>chmod u+x foo.txt</code> 为文件所有者添加操作权限</li>
+<li><code>chmod +r foo.txt</code> 为所有人添加读权限</li>
+<li><code>chmod o-rw foo.txt</code> 删除其他人的读写权限</li>
+<li><code>chmod go=rw foo.txt</code> 只给群组用户和其他人读写权限，其他权限清空<h4 id="掩码"><a href="#掩码" class="headerlink" title="掩码"></a>掩码</h4>umask被用来作为掩码设置文件的默认权限，它为掩码的八位数表示形式，展开成二位数时，哪个位置有1就删除这个位置的权限</li>
+<li>umask=0002<br>二进制位000 000 000 010 故删除others用户的写权限</li>
+<li><code>umask 0022</code>是设置掩码值的语句</li>
+<li><code>chmod g+s dir</code> 使文件dir所属用户组在此文件中创建的文件拥有与文件dir相同的用户组所有权，而不是创建者自己的用户组的所有权<code>sudo chmod g+s /usr/local/share/Music</code>文件名要包括具体路径<h4 id="更改文件所有者和用户组所有权"><a href="#更改文件所有者和用户组所有权" class="headerlink" title="更改文件所有者和用户组所有权"></a>更改文件所有者和用户组所有权</h4></li>
+<li><code>chown owner:group filename</code> 文件所有者和用户组要更改哪个更改哪个<ul>
+<li><code>owner</code>只更改用户</li>
+<li><code>owner:</code>更改用户，并把用户组改为用户所属用户组</li>
+<li><code>owner:group</code>用户和用户组都改</li>
+<li><code>:group</code>只改用户组</li>
+</ul>
+</li>
+</ul>
+<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><p>通过轮换执行多任务</p>
+<ul>
+<li><code>ps</code>报告当前进程快照(加上x展示所有进程)，可看到现有进程的PID，用来进行操作</li>
+<li><code>top</code>显示任务，会更新，用<code>q</code>退出</li>
+<li><code>jobs</code>列出活跃的任务</li>
+<li><code>bg %编号 或 pid</code>把一个任务放到后台执行（backward)</li>
+<li><code>fg %编号 或 pid</code>把一个任务放到前台执行（forward)</li>
+<li><code>Ctrl-c</code>中断一个进程</li>
+<li><code>Ctrl-z</code>停止一个进程，之后用<code>fg</code>可恢复至前台运行</li>
+<li><code>kill -参数 %编号 或 pid</code>杀死一个进程</li>
+<li><code>killall 程序or用户名</code> 杀死多个进程</li>
+</ul>
+</div><div class="tags"><a href="/tags/Linux/"><i class="fa fa-tag"></i>Linux</a></div><div class="post-nav"><a class="next" href="/2020/09/26/MySQL-%E8%AF%AD%E5%8F%A5%E6%80%BB%E7%BB%93-1/">MySQL 语句总结(1)</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://example.com"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/Linux-%E6%80%BB%E7%BB%93-1/">Linux 总结(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/26/MySQL-%E8%AF%AD%E5%8F%A5%E6%80%BB%E7%BB%93-1/">MySQL 语句总结(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/25/hello-world/">Hello World</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2020 <a href="/." rel="nofollow">哪吒的莲花宝座.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
