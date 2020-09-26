@@ -53,18 +53,31 @@
 </ul>
 <h2 id="展开和引用"><a href="#展开和引用" class="headerlink" title="展开和引用"></a>展开和引用</h2><p><code>echo</code> 展开显示一行文本，如果文本中有特殊字符，会根据字符的功能展开，除非使用引号禁用</p>
 <h4 id="字符展开"><a href="#字符展开" class="headerlink" title="字符展开"></a>字符展开</h4><ul>
-<li><code>echo 不包含特殊字符的普通文本</code> 在标准输出中直接打印<h4 id="路径名展开"><a href="#路径名展开" class="headerlink" title="路径名展开"></a>路径名展开</h4></li>
+<li><code>echo 不包含特殊字符的普通文本</code> 在标准输出中直接打印</li>
+</ul>
+<h4 id="路径名展开"><a href="#路径名展开" class="headerlink" title="路径名展开"></a>路径名展开</h4><ul>
 <li><code>echo *</code> or <code>echo D*</code> or <code>echo [[:upper:]]*</code> or <code>echo /usr/*/share</code> 通过通配符使echo展开显示有相关限制的文件名</li>
 <li><code>echo .*</code>可以列出很多隐藏文件，不过会导致出现当前工作目录的父目录<code>..</code>，若要使它不会出现，用<code>echo .[!.]?*</code>,文件名只能以一个圆点开头并且后面至少会跟一个字符。使用<code>ls -A</code>能更精确地列出隐藏文件</li>
-<li><code>echo ~</code> or <code>echo ~foo</code> 展开本账号的家用户名或账号foo的家用户名<h4 id="算术表达式展开"><a href="#算术表达式展开" class="headerlink" title="算术表达式展开"></a>算术表达式展开</h4></li>
+<li><code>echo ~</code> or <code>echo ~foo</code> 展开本账号的家用户名或账号foo的家用户名</li>
+</ul>
+<h4 id="算术表达式展开"><a href="#算术表达式展开" class="headerlink" title="算术表达式展开"></a>算术表达式展开</h4><ul>
 <li><code>echo $((expression))</code>双层括号</li>
 <li><code>echo $(($((5**2)) * 3))</code> 表达式可以嵌套，但是每一次运算都要使用一次<code>echo $((expression))</code>并注意双层括号，<code>**</code>是取幂运算</li>
-<li><code>echo with $((5%2)) left over.</code>算术表达式也可直接放在普通文本中，由于<code>echo</code>的存在输出结果会被自动计算<h4 id="花括号展开"><a href="#花括号展开" class="headerlink" title="花括号展开"></a>花括号展开</h4></li>
+<li><code>echo with $((5%2)) left over.</code>算术表达式也可直接放在普通文本中，由于<code>echo</code>的存在输出结果会被自动计算</li>
+</ul>
+<h4 id="花括号展开"><a href="#花括号展开" class="headerlink" title="花括号展开"></a>花括号展开</h4><ul>
 <li><code>ehco Front-&#123;A,B,C&#125;-Back</code> 花括号内是可选择的内容，括号外内容固定不变，输出结果数量看花括号内内容数量：<code>Front-A-Back Front-B-Back Front-C-Back</code></li>
 <li><code>echo Number_&#123;1..5&#125;</code> or <code>echo &#123;a..z&#125;</code> or <code>echo &#123;Z..A&#125;</code> 花括号内内容为一系列有序整数或字母时可用<code>..</code>省略输出</li>
-<li><code>echo a&#123;A&#123;1,2&#125;,B&#123;3,4&#125;&#125;b</code> 当花括号内有多组花括号时按花括号内的内容排列组合输出<h4 id="参数展开"><a href="#参数展开" class="headerlink" title="参数展开"></a>参数展开</h4></li>
-<li><code>echo $USER</code> 输出正在使用的用户名<h4 id="命令替换"><a href="#命令替换" class="headerlink" title="命令替换"></a>命令替换</h4></li>
-<li><code>ls -l $(which cp)</code> 把<code>which cp</code> 的执行结果传递给ls命令，在不知道cp完整路径名的情况下输出列表<h4 id="控制展开"><a href="#控制展开" class="headerlink" title="控制展开"></a>控制展开</h4>当用<code>echo</code>展开字符串时，它会自动删除字符串句子中的多余空格并展开特殊符号，此时需要其他方法来阻止展开；而文件名中的空格会导致文件名被自动切割识别为两个文件名，故要禁止文件名被展开</li>
+<li><code>echo a&#123;A&#123;1,2&#125;,B&#123;3,4&#125;&#125;b</code> 当花括号内有多组花括号时按花括号内的内容排列组合输出</li>
+</ul>
+<h4 id="参数展开"><a href="#参数展开" class="headerlink" title="参数展开"></a>参数展开</h4><ul>
+<li><code>echo $USER</code> 输出正在使用的用户名</li>
+</ul>
+<h4 id="命令替换"><a href="#命令替换" class="headerlink" title="命令替换"></a>命令替换</h4><ul>
+<li><code>ls -l $(which cp)</code> 把<code>which cp</code> 的执行结果传递给ls命令，在不知道cp完整路径名的情况下输出列表</li>
+</ul>
+<h4 id="控制展开"><a href="#控制展开" class="headerlink" title="控制展开"></a>控制展开</h4><p>当用<code>echo</code>展开字符串时，它会自动删除字符串句子中的多余空格并展开特殊符号，此时需要其他方法来阻止展开；而文件名中的空格会导致文件名被自动切割识别为两个文件名，故要禁止文件名被展开</p>
+<ul>
 <li>双引号<ul>
 <li>禁止单词分割（删除句子中多余空格），阻止文件名带空格时名字被空格分割</li>
 <li>不禁止参数展开（<code>echo $USER</code>）算术表达式展开（<code>echo $((expression))</code>）和命令行替换（<code>ls -l $(which cp)</code>）</li>
