@@ -6,7 +6,7 @@
 <h2 id="查看表操作"><a href="#查看表操作" class="headerlink" title="查看表操作"></a>查看表操作</h2><ul>
 <li><code>SHOW DATABASES;</code> 查看所有数据库名</li>
 <li><code>USE databasename;</code> 选择数据库</li>
-<li><code>SHOW databasenameTABLES;</code> 查看数据库中所有表名</li>
+<li><code>SHOW TABLES;</code> 查看数据库中所有表名</li>
 <li><code>DESCRIBE tablename;</code> 显示数据库中所要查看的表，只会显示表中的每一项名字和类型，每一项的内容不会显示</li>
 </ul>
 <h2 id="检索数据"><a href="#检索数据" class="headerlink" title="检索数据"></a>检索数据</h2><ul>
@@ -58,11 +58,15 @@
 <li>定位符：   <table>
 <thead>
 <tr>
-<th align="center">^</th>
-<th align="center">文本的开始</th>
+<th align="center">符号</th>
+<th align="center">位置</th>
 </tr>
 </thead>
 <tbody><tr>
+<td align="center">^</td>
+<td align="center">文本的开始</td>
+</tr>
+<tr>
 <td align="center">$</td>
 <td align="center">文本的结尾</td>
 </tr>
